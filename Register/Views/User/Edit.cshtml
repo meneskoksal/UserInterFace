@@ -30,9 +30,14 @@
         <span asp-validation-for="phone" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Edit</button>
 </form>
-
+<form >
+<div>
+    <a asp-controller="User" asp-action="Delete" asp-route-id="ID"
+       class="btn btn-sm btn-outline-secondary">Delete</a>
+</div>
+</form>
 
     
 

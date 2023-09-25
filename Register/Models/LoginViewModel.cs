@@ -4,8 +4,9 @@ namespace Register.Models
 {
     public class LoginViewModel
     {
-        [Display(Name = "Email Address")]
-        [Required(ErrorMessage = "Email address is required")]
+        [Display(Name = "Email ")]
+        [Required(ErrorMessage = "Email is required")]
+        
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]

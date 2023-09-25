@@ -7,10 +7,28 @@
 
 <form method="post" asp-action="Delete" enctype="multipart/form-data">
     <div class="form-group">
-        <label asp-for="Name">@Model.Name</label>
-        
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" placeholder="Name" readonly>
         <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SurName">SurName</label>
+        <input asp-for="SurName" class="form-control" placeholder="SurName" readonly>
+        <span asp-validation-for="SurName" class="text-danger"></span>
+    </div>
 
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" placeholder="Email" readonly>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="phone">Phone</label>
+        <input asp-for="phone" class="form-control" placeholder="PhoneNumber" readonly>
+        <span asp-validation-for="phone" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Delete</button>
+
+    
+    
 </form>

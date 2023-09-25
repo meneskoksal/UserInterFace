@@ -11,8 +11,8 @@ namespace Register.Controllers
     {
 
         private readonly IUserRepository _userRepository;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        
+        
         public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -33,20 +33,21 @@ namespace Register.Controllers
             if (ModelState.IsValid)
             {
                 var newuser = new User
-                {
-                    Name = user.Name,
-                    SurName = user.SurName,
-                    Email = user.Email,
-                    password = user.password,
-                    phone = user.phone,
-                    Gender = user.Gender
-                };
-                _userRepository.Add(newuser);
-                return RedirectToAction("Login");
+                 {       Name = user.Name,
+                         SurName = user.SurName,
+                         Email = user.Email,
+                         password = user.password,
+                         phone = user.phone,
+                         Gender = user.Gender
+              };
+             _userRepository.Add(newuser);
+               return RedirectToAction("List");
+ 
+
             }
             else
             {
-                ModelState.AddModelError("", "User edit Failed.");
+                ModelState.AddModelError("", "User Creation Failed.");
             }
             return View(user);
         }
@@ -129,7 +130,7 @@ namespace Register.Controllers
                    // if (result.IsCompletedSuccessfully)
 
                     //{
-                        return RedirectToAction("Create", "User");
+                        return RedirectToAction("List", "User");
                    // }
                 }
                 TempData["Error"] = "Wrong credentials. Please try again";
@@ -141,25 +142,35 @@ namespace Register.Controllers
 
         }
 
+        public async Task<IActionResult> Delete(int id,EditUserViewModel editVM)
+        {
+            var user = await _userRepository.GetByIdAsync(editVM.ID);
+            if (user == null) { return View("Error"); }
+            var tempuser = new User
+            {
+                ID = user.ID,
+                Name = user.Name,
+                SurName = user.SurName,
+                password=user.password,
+                Gender=user.Gender,
+                Email = user.Email,
+                phone = user.phone,
+            };
+            return View(tempuser);
 
         
 
-        public async Task<IActionResult> Delete(int id)
-        {
-            User user = await _userRepository.GetByIdAsync(id);
-            return View(user);
-
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(string name)
+        public async Task<IActionResult> Delete(string email)
         {
-            var user = await _userRepository.GetByNameAsync(name);
+            var user = await _userRepository.GetByEmailAsync(email);
             if (user == null)
             {
                 return View("Error");
             }
             _userRepository.Delete(user);
-            return RedirectToAction("Create");
+            return RedirectToAction("List");
         }
     }
 }
